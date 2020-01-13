@@ -179,18 +179,26 @@ uint SortShake(Intuha<uint>* obj, uint len)
 uint MyQuickSort(Intuha<uint>* obj, int start, int stop)
 {
 	assert(stop >= start);
-	uint shift = start;// (start + stop + 1) / 2;// (rand() % (stop - start) + start);
+	uint shift = static_cast<uint>((start + stop) / 2);
 	Intuha<uint> val (obj[shift].GetValue()), tmp (0);
 
-	int count_arr_left = start + 1;
+	int count_arr_left = start;
 	int count_arr_right = stop;
 	bool was_change = false;
 
+	cout << "Enter val = " << val.GetValue() << " shift = " << shift << endl;
+	for (uint i = 0; i <= stop - start; i++)
+	{
+		cout << "Data " << obj[start + i].loc_count << " val = " << obj[start + i].GetValue() << endl;
+	}
+
+	uint test_tmp, test;
 	do
 	{
+		test_tmp = obj[start].GetValue();
 		while (obj[count_arr_left] <= val)
 		{
-			if (count_arr_left < stop) { count_arr_left++; }
+ 		if (count_arr_left < stop) { count_arr_left++; }
 			else { break; }
 		}
 		while (val < obj[count_arr_right])
@@ -201,21 +209,27 @@ uint MyQuickSort(Intuha<uint>* obj, int start, int stop)
 
 		if (count_arr_left < count_arr_right)
 		{
-			was_change = true;
 			tmp = obj[count_arr_left];
 			obj[count_arr_left] = obj[count_arr_right];
 			obj[count_arr_right] = tmp;
 		}
 	} while (count_arr_left < count_arr_right);
 
-	tmp = obj[count_arr_right];
-	obj[count_arr_right] = obj[start];
-	obj[start] = tmp;
+	//tmp = obj[count_arr_right];
+	//obj[count_arr_right] = obj[start];
+	//obj[start] = tmp;
 
-	//if (!was_change) { return 0; }
+
+	cout << "Exit" << endl;
+	for (uint i = 0; i <= stop - start; i++)
+	{
+		cout << "Data " << obj[start + i].loc_count << " val = " << obj[start + i].GetValue() << endl;
+	}
 
 	if (start < (count_arr_right - 1)) { MyQuickSort(obj, start, count_arr_right - 1); }
 	if ((count_arr_right + 1) < stop) { MyQuickSort(obj, count_arr_right + 1, stop); }
+
+
 
 	return 0;
 }
@@ -267,7 +281,7 @@ uint copyArr(const Intuha<uint>* obj, Intuha<uint>* target, uint len)
 
 void main()
 {
-	const uint len = 100000;
+	const uint len = 10;
 	auto s1 = make_unique<Intuha<uint>[]>(len);
 	auto s2 = make_unique<Intuha<uint>[]>(len);
 
@@ -314,8 +328,9 @@ void main()
 		{
 			HronoTimer hTimer1("QuickSort");
 			uint br = MyQuickSort(s2.get(), 0, len - 1);
+			Valid_Sort(s2.get(), len);
 		}
 	}
-	Valid_Sort(s2.get(), len);
+	
 		
 }
