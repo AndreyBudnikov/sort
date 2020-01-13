@@ -1,0 +1,4 @@
+﻿  main.cpp
+C:\Users\cccvv\source\repos\sort\sort\main.cpp(150,6): warning C4101: start: неиспользованная локальная переменная
+C:\Users\cccvv\source\repos\sort\sort\main.cpp(269,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+  sort.vcxproj -> C:\Users\cccvv\source\repos\sort\Debug\sort.exe
