@@ -17,11 +17,11 @@ public:
 	HronoTimer(string str)
 	{
 		start = chrono::high_resolution_clock::now();
-		std::cout << endl << "Start timer " << str << endl;
+		std::cout << endl << "START - " << str << endl;
 	}
 	~HronoTimer()
 	{
-		std::cout << "Time Elapsed " << chrono::duration<double>(chrono::high_resolution_clock::now() - start).count() << endl;
+		std::cout << "STOP - Time Elapsed " << chrono::duration<double>(chrono::high_resolution_clock::now() - start).count() << endl;
 	}
 };
 
@@ -60,7 +60,7 @@ public:
 		delete data;
 	}
 
-	typename enable_if<is_same<T, uint>::value || is_same<T, int>::value, T>::type
+	typename enable_if<is_same<T, uint>::value || is_same<T, int>::value || is_same<T, float>::value, T>::type
 	init(T data)
 	{
 		this->data = new T(data);
@@ -120,10 +120,11 @@ public:
 template<class T>
 uint Intuha<T>::count = 0;
 
-uint SortBubble(Intuha<uint>* obj, uint len)
+template<class T>
+uint SortBubble(Intuha<T>* obj, uint len)
 {
 	uint count_step = 0;
-	Intuha<uint> tmp(0);
+	Intuha<T> tmp(0);
 	for (uint i = 0; i < (len - 1); i++)
 	{
 		for (uint j = 0; j < (len - i - 1); j++)
@@ -141,10 +142,11 @@ uint SortBubble(Intuha<uint>* obj, uint len)
 	return 0;
 }
 
-uint SortShake(Intuha<uint>* obj, uint len)
+template<class T>
+uint SortShake(Intuha<T>* obj, uint len)
 {
 	uint count_step = 0;
-	Intuha<uint> tmp(0);
+	Intuha<T> tmp(0);
 
 	int start, pos, step;
 	for (uint i = 0; i < (len - 1); i++)
@@ -175,11 +177,12 @@ uint SortShake(Intuha<uint>* obj, uint len)
 	return 0;
 }
 
-uint MyQuickSort(Intuha<uint>* obj, int start, int stop)
+template<class T>
+uint MyQuickSort(Intuha<T>* obj, int start, int stop)
 {
 	assert(stop >= start);
 	uint shift = static_cast<uint>((start + stop) / 2);
-	Intuha<uint> val (obj[shift].GetValue()), tmp (0);
+	Intuha<T> val (obj[shift].GetValue()), tmp (0);
 
 	tmp = obj[start];
 	obj[start] = obj[shift];
@@ -210,41 +213,74 @@ uint MyQuickSort(Intuha<uint>* obj, int start, int stop)
 	return 0;
 }
 
-uint SortCalc(Intuha<uint>* obj, int start, int stop)
+template<class T>
+uint SpecialSort(Intuha<T>* obj, uint start, uint len)
 {
-	assert(stop > start);
-	uint max = obj[start].GetValue();
+	return 0;
+}
 
-	for (uint i = start + 1; i < stop; i++)
+template<class T>
+typename enable_if<is_same<T, int>::value, T>::type
+SortSpecial(Intuha<int>* obj, int val, uint& count, const uint len)
+{
+	for (uint j = 0; j < len; j++)
 	{
-		if (max < obj[i].GetValue()) { max = obj[i].GetValue();	}
+		obj[count++] = val;
 	}
+	return 0;
+}
 
-	cout << " max = " << max << endl;
-
-	auto ptr = make_unique<uint[]>(max);
-	for (uint i = 0; i < max; i++) { ptr[i] = static_cast<uint>(0); }
-
-	for (uint i = start; i < stop; i++) {ptr[obj[i].GetValue()]++;}
-
-	cout << " pp " << endl;
-
-	uint count = 0;
+template<class T>
+typename enable_if<is_same<T, float>::value || is_same<T, double>::value, T>::type
+SortSpecial(Intuha<T>* obj, int val, uint& count, const uint len)
+{
+	assert(len > 0);
+	T intpath;
+	uint max = static_cast<T>(modf(obj[count].GetValue(), &intpath) * 1000), tmp;
+	for (uint i = 0; i < len; i++)
+	{
+		tmp = static_cast<T>(modf(obj[i].GetValue(), &intpath) * 1000);
+		if (max < tmp) { max = tmp; }
+	}
+	auto ptr = make_unique<uint[]>(++max);
+	for (int i = 0; i < max; i++) { ptr[i] = static_cast<int>(0); }
+	uint test;
+	for (int i = 0; i < len; i++) 
+	{ 
+		test = modf(obj[count + i].GetValue(), &intpath) * 1000;
+		ptr[static_cast<uint>(modf(obj[count + i].GetValue(), &intpath) * 1000)]++; 
+	}
 	for (uint i = 0; i < max; i++)
 	{
 		for (uint j = 0; j < ptr[i]; j++)
 		{
-			//cout << start + count << endl;
-			//obj[start + count] = i;
-			count++;
+			obj[count++] = val;
 		}
 	}
-
-	cout << "Exit jjj" << endl;
-
 	return 0;
 }
 
+template<class T>
+uint SortCalc(Intuha<T>* obj, int start, int stop)
+{
+	assert(stop > start);
+	int max = static_cast<T>(obj[start].GetValue());
+	for (uint i = start + 1; i <= stop; i++)
+	{
+		if (max < obj[i].GetValue()) { max = static_cast<uint>(obj[i].GetValue()); }
+	}
+
+	auto ptr = make_unique<uint[]>(++max);
+	for (int i = 0; i < max; i++) { ptr[i] = static_cast<uint>(0); }
+	for (int i = start; i <= stop; i++) { ptr[static_cast<uint>(obj[i].GetValue())]++; }
+
+	uint count = start;
+	for (int i = 0; i < max; i++)
+	{
+		if (ptr[i] > 0) { SortSpecial<T>(obj, i, count, ptr[i]); }
+	}
+	return 0;
+}
 
 
 uint Binary(multiset<Intuha<uint>>& obj, uint start, uint stop)
@@ -269,12 +305,14 @@ uint Binary(multiset<Intuha<uint>>& obj, uint start, uint stop)
 	return 0;
 }
 
-uint Valid_Sort(Intuha<uint>* obj, uint len)
+template<class T>
+uint Valid_Sort(Intuha<T>* obj, uint len)
 {
 	try {
-		uint test_val = obj[0].GetValue();
+		T test_val = obj[0].GetValue();
 		for (uint i = 0; i < len; i++)
 		{
+			cout << obj[i].GetValue() << endl;
 			if (test_val > obj[i].GetValue())
 			{
 				std::cout << "SORT FALSE" << endl;
@@ -292,7 +330,8 @@ uint Valid_Sort(Intuha<uint>* obj, uint len)
 	return 0;
 }
 
-uint copyArr(const Intuha<uint>* obj, Intuha<uint>* target, uint len)
+template<class T>
+uint copyArr(const Intuha<T>* obj, Intuha<T>* target, uint len)
 {
 	for (uint i = 0; i < len; i++)
 	{
@@ -301,12 +340,11 @@ uint copyArr(const Intuha<uint>* obj, Intuha<uint>* target, uint len)
 	return 0;
 }
 
-
-void main()
+int main()
 {
-	const uint len = 100;
-	auto s1 = make_unique<Intuha<uint>[]>(len);
-	auto s2 = make_unique<Intuha<uint>[]>(len);
+	const uint len = 20;
+	auto s1 = make_unique<Intuha<float>[]>(len);
+	auto s2 = make_unique<Intuha<float>[]>(len);
 
 	//int test[] = { 6, 0, 1, 1, 6, 5, 7, 2, 3, 8, 0, 17, 4, 6 };
 	//srand(unsigned(time(0)));
@@ -315,7 +353,7 @@ void main()
 	for (uint i = 0; i < len; i++)
 	{
 		//s1[i] = test[i];
-		s1[i] = (rand() % 1000);
+		s1[i] = static_cast<float>(rand() % 10000) / 1000;
 	}
 
 	copyArr(s1.get(), s2.get(), len);
@@ -337,7 +375,6 @@ void main()
 		HronoTimer hTimer1("SortCalc");
 		SortCalc(s2.get(), 0, len - 1);
 	}
-	cout << "'55" << endl;
 	Valid_Sort(s2.get(), len);
 
 	copyArr(s1.get(), s2.get(), len);
