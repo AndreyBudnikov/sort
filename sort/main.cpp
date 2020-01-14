@@ -25,7 +25,6 @@ public:
 	}
 };
 
-
 template <class T>
 class Intuha
 {
@@ -182,30 +181,16 @@ uint MyQuickSort(Intuha<uint>* obj, int start, int stop)
 	uint shift = static_cast<uint>((start + stop) / 2);
 	Intuha<uint> val (obj[shift].GetValue()), tmp (0);
 
-	int count_arr_left = start;
+	tmp = obj[start];
+	obj[start] = obj[shift];
+	obj[shift] = tmp;
+
+	int count_arr_left = start + 1;
 	int count_arr_right = stop;
-	bool was_change = false;
-
-	cout << "Enter val = " << val.GetValue() << " shift = " << shift << endl;
-	for (uint i = 0; i <= stop - start; i++)
-	{
-		cout << "Data " << obj[start + i].loc_count << " val = " << obj[start + i].GetValue() << endl;
-	}
-
-	uint test_tmp, test;
 	do
 	{
-		test_tmp = obj[start].GetValue();
-		while (obj[count_arr_left] <= val)
-		{
- 		if (count_arr_left < stop) { count_arr_left++; }
-			else { break; }
-		}
-		while (val < obj[count_arr_right])
-		{
-			if (count_arr_right > start) { count_arr_right--; }
-			else { break; }
-		}
+		while ((obj[count_arr_left] <= val) && (count_arr_left++ < stop));
+		while ((val < obj[count_arr_right]) && (count_arr_right-- > start));
 
 		if (count_arr_left < count_arr_right)
 		{
@@ -215,32 +200,62 @@ uint MyQuickSort(Intuha<uint>* obj, int start, int stop)
 		}
 	} while (count_arr_left < count_arr_right);
 
-	//tmp = obj[count_arr_right];
-	//obj[count_arr_right] = obj[start];
-	//obj[start] = tmp;
-
-
-	cout << "Exit" << endl;
-	for (uint i = 0; i <= stop - start; i++)
-	{
-		cout << "Data " << obj[start + i].loc_count << " val = " << obj[start + i].GetValue() << endl;
-	}
+	tmp = obj[count_arr_right];
+	obj[count_arr_right] = obj[start];
+	obj[start] = tmp;
 
 	if (start < (count_arr_right - 1)) { MyQuickSort(obj, start, count_arr_right - 1); }
 	if ((count_arr_right + 1) < stop) { MyQuickSort(obj, count_arr_right + 1, stop); }
 
+	return 0;
+}
 
+uint SortCalc(Intuha<uint>* obj, int start, int stop)
+{
+	assert(stop > start);
+	uint max = obj[start].GetValue();
+
+	for (uint i = start + 1; i < stop; i++)
+	{
+		if (max < obj[i].GetValue()) { max = obj[i].GetValue();	}
+	}
+
+	cout << " max = " << max << endl;
+
+	auto ptr = make_unique<uint[]>(max);
+	for (uint i = 0; i < max; i++) { ptr[i] = static_cast<uint>(0); }
+
+	for (uint i = start; i < stop; i++) {ptr[obj[i].GetValue()]++;}
+
+	cout << " pp " << endl;
+
+	uint count = 0;
+	for (uint i = 0; i < max; i++)
+	{
+		for (uint j = 0; j < ptr[i]; j++)
+		{
+			//cout << start + count << endl;
+			//obj[start + count] = i;
+			count++;
+		}
+	}
+
+	cout << "Exit jjj" << endl;
 
 	return 0;
 }
 
 
+
 uint Binary(multiset<Intuha<uint>>& obj, uint start, uint stop)
 {
 	cout << "Enter Bin" << endl;
-	decltype(auto) iter = obj.cbegin();
+
+	//obj.
+
+	//..decltype(auto) iter = obj.cbegin();
 	Intuha<uint> tmp;
-	tmp = *iter;
+	//tmp = *iter;
 
 	cout << "Enter cycle" << endl;
 	//while (tmp != obj.cend())
@@ -250,21 +265,29 @@ uint Binary(multiset<Intuha<uint>>& obj, uint start, uint stop)
 	//	
 	//}
 
-	 return (*iter).GetValue();
+	// return (*iter).GetValue();
+	return 0;
 }
 
 uint Valid_Sort(Intuha<uint>* obj, uint len)
 {
+	try {
 		uint test_val = obj[0].GetValue();
-	for (uint i = 0; i < len; i++)
-	{
-		if (test_val > obj[i].GetValue())
+		for (uint i = 0; i < len; i++)
 		{
-			std::cout << "SORT FALSE" << endl;
-			break;
+			if (test_val > obj[i].GetValue())
+			{
+				std::cout << "SORT FALSE" << endl;
+				break;
+			}
+			test_val = obj[i].GetValue();
+			if (i == (len - 1)) { std::cout << "SORT TRUE" << endl; }
 		}
-		test_val = obj[i].GetValue();
-		if (i == (len - 1)) { std::cout << "SORT TRUE" << endl; }
+	}
+	catch (...)
+	{
+		cout << "Procces validation false" << endl;
+		exit (1);
 	}
 	return 0;
 }
@@ -281,7 +304,7 @@ uint copyArr(const Intuha<uint>* obj, Intuha<uint>* target, uint len)
 
 void main()
 {
-	const uint len = 10;
+	const uint len = 100;
 	auto s1 = make_unique<Intuha<uint>[]>(len);
 	auto s2 = make_unique<Intuha<uint>[]>(len);
 
@@ -310,27 +333,18 @@ void main()
 	Valid_Sort(s2.get(), len);
 
 	copyArr(s1.get(), s2.get(), len);
-	multiset<Intuha<uint>> tree;
-	//for (uint i = 0; i < len; i++)
 	{
-	//	tree.insert(Intuha<uint>(s1[i].GetValue()));
+		HronoTimer hTimer1("SortCalc");
+		SortCalc(s2.get(), 0, len - 1);
 	}
-
-	{
-		//HronoTimer hTimer1("Binary");
-		//cout << Binary(tree, 0, len - 1) << endl;
-	}
+	cout << "'55" << endl;
+	Valid_Sort(s2.get(), len);
 
 	copyArr(s1.get(), s2.get(), len);
 	{
-
-		for (uint i = 0; i < 1; i++)
-		{
-			HronoTimer hTimer1("QuickSort");
-			uint br = MyQuickSort(s2.get(), 0, len - 1);
-			Valid_Sort(s2.get(), len);
-		}
+		HronoTimer hTimer1("QuickSort");
+		MyQuickSort(s2.get(), 0, len - 1);
 	}
-	
+	Valid_Sort(s2.get(), len);
 		
 }

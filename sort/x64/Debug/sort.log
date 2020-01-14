@@ -1,7 +1,6 @@
 ﻿  main.cpp
-C:\vsprojects\public\sort\sort\main.cpp(150,6): warning C4101: start: неиспользованная локальная переменная
-C:\vsprojects\public\sort\sort\main.cpp(190,21): warning C4018: <=: несоответствие типов со знаком и без знака
-C:\vsprojects\public\sort\sort\main.cpp(224,21): warning C4018: <=: несоответствие типов со знаком и без знака
-C:\vsprojects\public\sort\sort\main.cpp(195,17): warning C4101: test: неиспользованная локальная переменная
-C:\vsprojects\public\sort\sort\main.cpp(283,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
-  sort.vcxproj -> C:\vsprojects\public\sort\x64\Debug\sort.exe
+C:\vsproject\public\sort\sort\main.cpp(149,6): warning C4101: start: неиспользованная локальная переменная
+C:\vsproject\public\sort\sort\main.cpp(218,29): warning C4018: <: несоответствие типов со знаком и без знака
+C:\vsproject\public\sort\sort\main.cpp(228,25): warning C4018: <: несоответствие типов со знаком и без знака
+C:\vsproject\public\sort\sort\main.cpp(306,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+  sort.vcxproj -> C:\vsproject\public\sort\x64\Debug\sort.exe
