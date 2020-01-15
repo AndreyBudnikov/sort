@@ -1,27 +1,12 @@
 ﻿  main.cpp
-C:\vsprojects\public\sort\sort\main.cpp(151,6): warning C4101: start: неиспользованная локальная переменная
-C:\vsprojects\public\sort\sort\main.cpp(375): message : выполняется компиляция ссылки на экземпляр шаблон функции "uint SortShake<float>(Intuha<float> *,uint)"
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\include\chrono(632): message : выполняется компиляция ссылки на экземпляр класс шаблон функции "std::chrono::duration<double,std::ratio<1,1>>"
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\include\chrono(178): message : выполняется компиляция ссылки на экземпляр класс шаблон функции "std::chrono::duration<__int64,std::nano>"
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.24.28314\include\chrono(610): message : выполняется компиляция ссылки на экземпляр класс шаблон функции "std::chrono::time_point<std::chrono::steady_clock,std::chrono::nanoseconds>"
-C:\vsprojects\public\sort\sort\main.cpp(227,10): warning C4244: инициализация: преобразование "T" в "int", возможна потеря данных
-          with
-          [
-              T=float
-          ]
-C:\vsprojects\public\sort\sort\main.cpp(382): message : выполняется компиляция ссылки на экземпляр шаблон функции "uint SortCalc<float>(Intuha<float> *,int,int)"
-C:\vsprojects\public\sort\sort\main.cpp(228,21): warning C4018: <: несоответствие типов со знаком и без знака
-C:\vsprojects\public\sort\sort\main.cpp(230,35): warning C4244: =: преобразование "T" в "uint", возможна потеря данных
-          with
-          [
-              T=float
-          ]
-C:\vsprojects\public\sort\sort\main.cpp(231,11): warning C4018: <: несоответствие типов со знаком и без знака
-C:\vsprojects\public\sort\sort\main.cpp(303,25): warning C4018: <=: несоответствие типов со знаком и без знака
-C:\vsprojects\public\sort\sort\main.cpp(396): message : выполняется компиляция ссылки на экземпляр шаблон функции "uint MergeSort<float>(Intuha<float> *,int,int)"
-C:\vsprojects\public\sort\sort\main.cpp(269,21): warning C4018: <=: несоответствие типов со знаком и без знака
-C:\vsprojects\public\sort\sort\main.cpp(310): message : выполняется компиляция ссылки на экземпляр шаблон функции "uint Merge<float>(Intuha<float> *,int,int)"
-C:\vsprojects\public\sort\sort\main.cpp(396): message : выполняется компиляция ссылки на экземпляр шаблон функции "uint MergeSort<float>(Intuha<float> *,int,int)"
-C:\vsprojects\public\sort\sort\main.cpp(271,61): warning C4018: >: несоответствие типов со знаком и без знака
-C:\vsprojects\public\sort\sort\main.cpp(285,21): warning C4018: <=: несоответствие типов со знаком и без знака
-  sort.vcxproj -> C:\vsprojects\public\sort\x64\Debug\sort.exe
+C:\vsproject\public\sort\sort\main.cpp(341,47): warning C4244: аргумент: преобразование "float" в "T", возможна потеря данных
+C:\vsproject\public\sort\sort\main.cpp(341,47): warning C4244:         with
+C:\vsproject\public\sort\sort\main.cpp(341,47): warning C4244:         [
+C:\vsproject\public\sort\sort\main.cpp(341,47): warning C4244:             T=int
+C:\vsproject\public\sort\sort\main.cpp(341,47): warning C4244:         ]
+C:\vsproject\public\sort\sort\main.cpp(229,21): warning C4018: <: несоответствие типов со знаком и без знака
+C:\vsproject\public\sort\sort\main.cpp(361): message : выполняется компиляция ссылки на экземпляр шаблон функции "uint SortCalc<int>(Intuha<int> *,int,int)"
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\chrono(669): message : выполняется компиляция ссылки на экземпляр класс шаблон функции "std::chrono::duration<double,std::ratio<1,1>>"
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\chrono(177): message : выполняется компиляция ссылки на экземпляр класс шаблон функции "std::chrono::duration<__int64,std::nano>"
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\chrono(647): message : выполняется компиляция ссылки на экземпляр класс шаблон функции "std::chrono::time_point<std::chrono::steady_clock,std::chrono::steady_clock::duration>"
+  sort.vcxproj -> C:\vsproject\public\sort\x64\Debug\sort.exe

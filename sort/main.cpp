@@ -222,25 +222,27 @@ uint SortCalc(Intuha<T>* obj, int start, int len)
 {
 	assert(len > 0);
 	const uint factor = Prepare(static_cast<T>(0));
-	uint tmp;
 
+	int tmp;
 	int max = static_cast<T>(obj[start].GetValue() * factor);
+	int min = max;
 	for (uint i = 1; i < len; i++)
 	{
 		tmp = obj[start + i].GetValue() * factor;
 		if (max < tmp) { max = tmp; }
+		if (tmp < min) { min = tmp; }
 	}
-
+	max += abs(min);
 	auto ptr = make_unique<uint[]>(++max);
 	for (int i = 0; i < max; i++) { ptr[i] = static_cast<uint>(0); }
-	for (int i = 0; i < len; i++) { ptr[static_cast<uint>(obj[start + i].GetValue() * factor)]++; }
+	for (int i = 0; i < len; i++) { ptr[static_cast<uint>(obj[start + i].GetValue() * factor) + abs(min)]++; }
 
 	uint count = start;
 	for (int i = 0; i < max; i++)
 	{
 		for (uint j = 0; j < ptr[i]; j++)
 		{
-			obj[count++] = static_cast<T>(i) / factor;
+			obj[count++] = static_cast<T>(i - min) / factor;
 		}
 	}
 	return 0;
@@ -253,41 +255,20 @@ uint Binary(multiset<Intuha<uint>>& obj, uint start, uint stop)
 }
 
 template<class T>
-uint Merge(Intuha<T>* obj, int start, int stop)
+uint Merge(Intuha<T>* obj, uint start, uint stop)
 {
-	cout << "Enter merge " << start << " stop " << stop;
-
 	assert(stop >= start);
 	auto ptr = make_unique<Intuha<T>[]>(stop - start + 1);
 	uint med = (stop + start) / 2;
 	uint first = start , last = med + 1;
 	uint count = 0;
 
-	cout << " med " << med << endl;
-	
-
 	for (uint i = 0; i <= (stop - start); i++)
 	{
-		if (((first <= med) && (obj[first] < obj[last])) || (last > stop)) 
-		{ 
-			cout << "1 " << i << " " << first << " " << last << endl;
-			ptr[i] = obj[first++]; 
-		}
-		else 
-		{ 
-			cout << "2 " << i << " " << first << " " << last << endl;
-			ptr[i] = obj[last++]; 
-		}
+		if ((last > stop) || ((first <= med) && (obj[first] < obj[last]))) { ptr[i] = obj[first++]; }
+		else { ptr[i] = obj[last++]; }
 	}
-
-	cout << "Copy " << endl;
-
-	for (uint i = 0; i <= (stop - start); i++)
-	{
-		obj[start + i] = ptr[i];
-
-		cout << obj[start + i].GetValue() << endl;
-	}
+	for (uint i = 0; i <= (stop - start); i++) { obj[start + i] = ptr[i]; }
 	return 0;
 }
 
@@ -295,15 +276,13 @@ template<class T>
 uint MergeSort(Intuha<T>* obj, int start, int stop)
 {
 	assert(stop >= start);
-
 	if (stop == start) { return 0; }
 	uint med = (stop + start) / 2;
-
-	cout << "Enter start " << start << " stop " << stop << " med " << med << endl;
-	for (uint i = start; i <= stop; i++)
-	{
-		cout << "Data " << obj[i].GetValue() << endl;
-	}
+	//cout << "Enter start " << start << " stop " << stop << " med " << med << endl;
+	//for (uint i = start; i <= stop; i++)
+	//{
+	//	cout << "Data " << obj[i].GetValue() << endl;
+	//}
 	
 	MergeSort(obj, start, med);
 	MergeSort(obj, med + 1, stop);
@@ -348,9 +327,9 @@ uint copyArr(const Intuha<T>* obj, Intuha<T>* target, uint len)
 
 int main()
 {
-	const uint len = 20;
-	auto s1 = make_unique<Intuha<float>[]>(len);
-	auto s2 = make_unique<Intuha<float>[]>(len);
+	const uint len = 500;
+	auto s1 = make_unique<Intuha<int>[]>(len);
+	auto s2 = make_unique<Intuha<int>[]>(len);
 
 	//int test[] = { 6, 0, 1, 1, 6, 5, 7, 2, 3, 8, 0, 17, 4, 6 };
 	srand(unsigned(time(0)));
@@ -359,20 +338,20 @@ int main()
 	for (uint i = 0; i < len; i++)
 	{
 		//s1[i] = test[i];
-		s1[i] = static_cast<float>(rand() % 100000) / MAX_SIGN;
+		s1[i] = static_cast<float>(rand() % 100000) - 50000;// / MAX_SIGN;
 	}
 
 	copyArr(s1.get(), s2.get(), len);
 	{
 		HronoTimer hTimer1("Bubbles");
-	 	SortBubble(s2.get(), len);
+	 	//SortBubble(s2.get(), len);
 	}
 	Valid_Sort(s2.get(), len);
 
 	copyArr(s1.get(), s2.get(), len);
 	{
 		HronoTimer hTimer1("Shake");
-		SortShake(s2.get(), len);
+		//SortShake(s2.get(), len);
 	}
 	Valid_Sort(s2.get(), len);
 
