@@ -253,20 +253,61 @@ uint Binary(multiset<Intuha<uint>>& obj, uint start, uint stop)
 }
 
 template<class T>
-Intuha<T>* Merge(Intuha<T>* obj, int start, int len)
+uint Merge(Intuha<T>* obj, int start, int stop)
 {
-	assert(len > 0);
+	cout << "Enter merge " << start << " stop " << stop;
 
-	if(len == 1) {return }
-	uint mid = (len + 1) / 2;
-	auto ptr1 = obj;
-	auto ptr2 = obj + mid * sizeof(Intuha<T>);
+	assert(stop >= start);
+	auto ptr = make_unique<Intuha<T>[]>(stop - start + 1);
+	uint med = (stop + start) / 2;
+	uint first = start , last = med + 1;
+	uint count = 0;
 
-
+	cout << " med " << med << endl;
 	
-	ptr1 = Merge(obj, start, mid);
-	ptr2 = Merge(obj, start + mid, len - mid);
+
+	for (uint i = 0; i <= (stop - start); i++)
+	{
+		if (((first <= med) && (obj[first] < obj[last])) || (last > stop)) 
+		{ 
+			cout << "1 " << i << " " << first << " " << last << endl;
+			ptr[i] = obj[first++]; 
+		}
+		else 
+		{ 
+			cout << "2 " << i << " " << first << " " << last << endl;
+			ptr[i] = obj[last++]; 
+		}
+	}
+
+	cout << "Copy " << endl;
+
+	for (uint i = 0; i <= (stop - start); i++)
+	{
+		obj[start + i] = ptr[i];
+
+		cout << obj[start + i].GetValue() << endl;
+	}
+	return 0;
+}
+
+template<class T>
+uint MergeSort(Intuha<T>* obj, int start, int stop)
+{
+	assert(stop >= start);
+
+	if (stop == start) { return 0; }
+	uint med = (stop + start) / 2;
+
+	cout << "Enter start " << start << " stop " << stop << " med " << med << endl;
+	for (uint i = start; i <= stop; i++)
+	{
+		cout << "Data " << obj[i].GetValue() << endl;
+	}
 	
+	MergeSort(obj, start, med);
+	MergeSort(obj, med + 1, stop);
+	Merge(obj, start, stop);
 	return 0;
 }
 
@@ -348,5 +389,13 @@ int main()
 		MyQuickSort(s2.get(), 0, len - 1);
 	}
 	Valid_Sort(s2.get(), len);
+
+	copyArr(s1.get(), s2.get(), len);
+	{
+		HronoTimer hTimer1("MergeSort");
+		MergeSort(s2.get(), 0, len - 1);
+	}
+	Valid_Sort(s2.get(), len);
+
 		
 }
