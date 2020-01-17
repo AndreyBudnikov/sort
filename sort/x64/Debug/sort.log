@@ -1,12 +1,2 @@
 ﻿  main.cpp
-C:\vsproject\public\sort\sort\main.cpp(341,47): warning C4244: аргумент: преобразование "float" в "T", возможна потеря данных
-C:\vsproject\public\sort\sort\main.cpp(341,47): warning C4244:         with
-C:\vsproject\public\sort\sort\main.cpp(341,47): warning C4244:         [
-C:\vsproject\public\sort\sort\main.cpp(341,47): warning C4244:             T=int
-C:\vsproject\public\sort\sort\main.cpp(341,47): warning C4244:         ]
-C:\vsproject\public\sort\sort\main.cpp(229,21): warning C4018: <: несоответствие типов со знаком и без знака
-C:\vsproject\public\sort\sort\main.cpp(361): message : выполняется компиляция ссылки на экземпляр шаблон функции "uint SortCalc<int>(Intuha<int> *,int,int)"
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\chrono(669): message : выполняется компиляция ссылки на экземпляр класс шаблон функции "std::chrono::duration<double,std::ratio<1,1>>"
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\chrono(177): message : выполняется компиляция ссылки на экземпляр класс шаблон функции "std::chrono::duration<__int64,std::nano>"
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.23.28105\include\chrono(647): message : выполняется компиляция ссылки на экземпляр класс шаблон функции "std::chrono::time_point<std::chrono::steady_clock,std::chrono::steady_clock::duration>"
   sort.vcxproj -> C:\vsproject\public\sort\x64\Debug\sort.exe
