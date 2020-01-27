@@ -4,16 +4,38 @@
 #include <cassert>
 #include <cstring>
 
+#include <vector>
+#include <algorithm>
+#include <iterator>
+
 #include "myType.h"
 
 typedef unsigned int uint;
-using namespace std;
+
 
 namespace MySort
 {
 	template<class T>
+	uint myHeapSort(Intuha<T>* obj, uint len)
+	{
+		if (len <= 1) { return 0; }
+		std::vector<Intuha<T>> v;
+		for (uint i = 0; i < len; i++) { v.emplace_back(obj[i]); }
+		uint tmp = v.size();
+		for (auto it = v.end(); it > v.begin(); it--)
+		{
+			std::make_heap(v.begin(), it);
+			std::swap(v[0], v[--tmp]);
+		}
+		for (uint i = 0; i < len; i++) { obj[i] = v[i]; }
+
+		return 0;
+	}
+
+	template<class T>
 	uint SortBubble(Intuha<T>* obj, uint len)
 	{
+		if (len <= 1) { return 0; }
 		uint count_step = 0;
 		Intuha<T> tmp(0);
 		for (uint i = 0; i < (len - 1); i++)
@@ -29,20 +51,19 @@ namespace MySort
 				}
 			}
 		}
-		std::cout << "Step = " << count_step << endl;
 		return 0;
 	}
 
 	template<class T>
 	uint SortShake(Intuha<T>* obj, uint len)
 	{
+		if (len <= 1) { return 0; }
 		uint count_step = 0;
 		Intuha<T> tmp(0);
 
 		int start, pos, step;
 		for (uint i = 0; i < (len - 1); i++)
 		{
-
 			pos = static_cast<uint>((i + 1) / 2);
 			step = 1;
 
@@ -64,7 +85,6 @@ namespace MySort
 				pos += step;
 			}
 		}
-		std::cout << "Step = " << count_step << endl;
 		return 0;
 	}
 
@@ -72,6 +92,7 @@ namespace MySort
 	uint MyQuickSort(Intuha<T>* obj, int start, int stop)
 	{
 		assert(stop >= start);
+		if (stop == start) { return 0; }
 		uint shift = static_cast<uint>((start + stop) / 2);
 		Intuha<T> val(obj[shift].GetValue()), tmp(0);
 
@@ -104,16 +125,15 @@ namespace MySort
 		return 0;
 	}
 
-	const uint MAX_SIGN = 10000;
-	inline uint Prepare(float data) { return MAX_SIGN; }
+	inline uint Prepare(float data) { return 100; }
 	inline uint Prepare(int data) { return 1; }
 
 	template<class T>
 	uint SortCalc(Intuha<T>* obj, int start, int len)
 	{
 		assert(len > 0);
+		if (len <= 1) { return 0; }
 		const uint factor = Prepare(static_cast<T>(0));
-
 		int tmp;
 		int max = static_cast<T>(obj[start].GetValue() * factor);
 		int min = max;
@@ -123,7 +143,7 @@ namespace MySort
 			if (max < tmp) { max = tmp; }
 			if (tmp < min) { min = tmp; }
 		}
-		assert(max < 10000);
+		assert(max <= 10000);
 		max += abs(min);
 		auto ptr = make_unique<uint[]>(++max);
 		for (int i = 0; i < max; i++) { ptr[i] = static_cast<uint>(0); }
@@ -144,6 +164,7 @@ namespace MySort
 	uint Merge(Intuha<T>* obj, uint start, uint stop)
 	{
 		assert(stop >= start);
+		if (stop == start) { return 0; }
 		auto ptr = make_unique<Intuha<T>[]>(stop - start + 1);
 		uint med = (stop + start) / 2;
 		uint first = start, last = med + 1;
@@ -155,6 +176,7 @@ namespace MySort
 			else { ptr[i] = obj[last++]; }
 		}
 		for (uint i = 0; i <= (stop - start); i++) { obj[start + i] = ptr[i]; }
+
 		return 0;
 	}
 
@@ -167,6 +189,7 @@ namespace MySort
 		MergeSort(obj, start, med);
 		MergeSort(obj, med + 1, stop);
 		Merge(obj, start, stop);
+
 		return 0;
 	}
 }

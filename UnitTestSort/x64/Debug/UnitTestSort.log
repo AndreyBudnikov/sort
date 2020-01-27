@@ -1,0 +1,30 @@
+﻿  UnitTestSort.cpp
+C:\vsproject\public\sort\sort\sort.h(64,7): warning C4101: start: неиспользованная локальная переменная
+C:\vsproject\public\sort\UnitTestSort\UnitTestSort.cpp(87): message : выполняется компиляция ссылки на экземпляр шаблон функции "uint MySort::SortShake<T>(Intuha<T> *,uint)"
+C:\vsproject\public\sort\UnitTestSort\UnitTestSort.cpp(87): message :         with
+C:\vsproject\public\sort\UnitTestSort\UnitTestSort.cpp(87): message :         [
+C:\vsproject\public\sort\UnitTestSort\UnitTestSort.cpp(87): message :             T=float
+C:\vsproject\public\sort\UnitTestSort\UnitTestSort.cpp(87): message :         ]
+C:\vsproject\public\sort\sort\sort.h(138,11): warning C4244: инициализация: преобразование "T" в "int", возможна потеря данных
+C:\vsproject\public\sort\sort\sort.h(138,11): warning C4244:         with
+C:\vsproject\public\sort\sort\sort.h(138,11): warning C4244:         [
+C:\vsproject\public\sort\sort\sort.h(138,11): warning C4244:             T=float
+C:\vsproject\public\sort\sort\sort.h(138,11): warning C4244:         ]
+C:\vsproject\public\sort\UnitTestSort\UnitTestSort.cpp(105): message : выполняется компиляция ссылки на экземпляр шаблон функции "uint MySort::SortCalc<T>(Intuha<T> *,int,int)"
+C:\vsproject\public\sort\UnitTestSort\UnitTestSort.cpp(105): message :         with
+C:\vsproject\public\sort\UnitTestSort\UnitTestSort.cpp(105): message :         [
+C:\vsproject\public\sort\UnitTestSort\UnitTestSort.cpp(105): message :             T=float
+C:\vsproject\public\sort\UnitTestSort\UnitTestSort.cpp(105): message :         ]
+C:\vsproject\public\sort\sort\sort.h(140,22): warning C4018: <: несоответствие типов со знаком и без знака
+C:\vsproject\public\sort\sort\sort.h(142,36): warning C4244: =: преобразование "T" в "int", возможна потеря данных
+C:\vsproject\public\sort\sort\sort.h(142,36): warning C4244:         with
+C:\vsproject\public\sort\sort\sort.h(142,36): warning C4244:         [
+C:\vsproject\public\sort\sort\sort.h(142,36): warning C4244:             T=float
+C:\vsproject\public\sort\sort\sort.h(142,36): warning C4244:         ]
+C:\vsproject\public\sort\sort\sort.h(24,1): warning C4267: инициализация: преобразование из "size_t" в "uint"; возможна потеря данных
+C:\vsproject\public\sort\UnitTestSort\UnitTestSort.cpp(113): message : выполняется компиляция ссылки на экземпляр шаблон функции "uint MySort::myHeapSort<T>(Intuha<T> *,uint)"
+C:\vsproject\public\sort\UnitTestSort\UnitTestSort.cpp(113): message :         with
+C:\vsproject\public\sort\UnitTestSort\UnitTestSort.cpp(113): message :         [
+C:\vsproject\public\sort\UnitTestSort\UnitTestSort.cpp(113): message :             T=float
+C:\vsproject\public\sort\UnitTestSort\UnitTestSort.cpp(113): message :         ]
+  UnitTestSort.vcxproj -> C:\vsproject\public\sort\x64\Debug\UnitTestSort.dll
